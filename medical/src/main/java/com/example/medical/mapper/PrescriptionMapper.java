@@ -10,11 +10,15 @@ import java.util.List;
 public interface PrescriptionMapper {
 
     //根据序号和子序号查询处方
-    @Select("SELECT * FROM prescription WHERE order_no = #{orderNo} AND sub_order_no = #{subOrderNo}")
+    @Select("SELECT * FROM prescription p " +
+            "JOIN medical_order m ON p.order_no=m.order_no AND p.sub_order_no=m.sub_order_no " +
+            "WHERE p.order_no = #{orderNo} AND p.sub_order_no = #{subOrderNo}"))
     List<Prescription> findByOrderNoAndSubOrderNo(@Param("orderNo") String orderNo, @Param("subOrderNo") String subOrderNo);
 
     //根据主键id查询处方
-    @Select("SELECT * FROM prescription WHERE id = #{id}")
+    @Select("SELECT * FROM prescription p " +
+            "JOIN medical_order m ON p.order_no=m.order_no AND p.sub_order_no=m.sub_order_no " +
+            "WHERE p.id = #{id}")
     Prescription findById(@Param("id") Long id);
 
     //添加或更新处方
